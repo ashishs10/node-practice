@@ -69,10 +69,10 @@ const replaceTemplate = (temp, product) =>
 // creating the server
 const server = http.createServer((req, res)=>
 {   
-    const pathName = req.url;
+    const {query, pathname} = url.parse(req.url, true);
 
     //OVERVIEW
-    if (pathName === "/" || pathName === "/overview") 
+    if (pathname === "/" || pathname === "/overview") 
     {
         res.writeHead(200, {'Content-type' : 'text/html'});
         //loop through dataObj and replace the placeholders in overview with the objects
@@ -87,9 +87,14 @@ const server = http.createServer((req, res)=>
 
     }
     //PRODUCT
-    else if ( pathName === "/product") 
+    else if ( pathname === "/product") 
     { 
-        res.end("This is product page");
+        res.writeHead(200, {'Content-type' : 'text/html'});
+
+        const product = dataObj[query.id];
+        const output = replaceTemplate(tempProduct, product);
+
+        res.end(output);
     }
     else 
     {
