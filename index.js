@@ -32,6 +32,7 @@ const url = require('url');
 const fs = require('fs');
 const { dirname } = require('path');
 const { log } = require('console');
+const replaceTemplate = require('./modules/replaceTemplate');
 
 //GET THE DATA - DATA THAT NEEDS TO BE LOADED ONLY ONCE
 //CAN BE FETCHED SYNCHRONOUSLY
@@ -48,20 +49,7 @@ const tempCard = fs.readFileSync(`${__dirname}/templates/template-card.html`, 'u
 // comsole.log(tempProduct);
 
 //replace template function
-const replaceTemplate = (temp, product) =>
-{
-    let output = temp.replace(/{%PRODUCT_NAME%}/g, product.productName);
-    output = output.replace(/{%IMAGE%}/g, product.image);
-    output = output.replace(/{%PRICE%}/g, product.price);
-    output = output.replace(/{%FROM%}/g, product.from);
-    output = output.replace(/{%NUTRIENTS%}/g, product.nutrients);
-    output = output.replace(/{%QUANTITY%}/g, product.quantity);
-    output = output.replace(/{%ID%}/g, product.id);
-    output = output.replace(/{%DESCRIPTION%}/g, product.description);
-    if (!product.organic) output = output.replace(/{%NOT_ORGANIC%}/g, 'not-organic');
-    
-    return output;
-}
+
 
 // dataObj.map(el => console.log(el.description));
 
